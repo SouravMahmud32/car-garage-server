@@ -22,6 +22,7 @@ async function run(){
         const individualBrandCollection = client.db('carGarage').collection('individualBrand');
         const bookingsCollection = client.db('carGarage').collection('bookings');
         const usersCollection = client.db('carGarage').collection('users');
+        const advirtiseProductsCollection = client.db('carGarage').collection('advirtiseProducts');
 
         app.get('/brandsCollection', async(req, res) =>{
             const query = {};
@@ -81,6 +82,12 @@ async function run(){
             const result = await usersCollection.insertOne(user);
             res.send(result); 
         });
+
+        app.post("/advirtise", verifyJWT, async (req, res) => {
+            const product = req.body;
+            const result = await advirtiseProductsCollection.insertOne(product);
+            res.send(result);
+          });
 
         app.delete('/users/:id', async (req, res) => {
             const id = req.params.id;
