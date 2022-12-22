@@ -76,6 +76,12 @@ async function run(){
             const user = await usersCollection.findOne(query);
             res.send({ isAdmin: user?.role === "admin" });
           });
+
+          app.get("/advirtise", async (req, res) =>{
+            const query = {};
+            const advirtise = await advirtiseProductsCollection.find(query).toArray();
+            res.send(advirtise);
+          })
         
         app.post('/users', async(req, res) =>{
             const user = req.body;
@@ -83,7 +89,7 @@ async function run(){
             res.send(result); 
         });
 
-        app.post("/advirtise", verifyJWT, async (req, res) => {
+        app.post("/advirtise", async (req, res) => {
             const product = req.body;
             const result = await advirtiseProductsCollection.insertOne(product);
             res.send(result);
